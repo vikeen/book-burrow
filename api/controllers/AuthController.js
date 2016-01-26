@@ -27,7 +27,7 @@ function login(req, res, next) {
 function local(req, res, next) {
   AuthService.local(req, res, function (err, response) {
     if (err) {
-      req.session.messages.error = [err];
+      //req.session.messages.error = [err];
       return res.redirect('/login');
     } else {
       return res.redirect("/dashboard");
