@@ -1,0 +1,16 @@
+extends ./layout.jade
+
+block content
+  .container.dashboard
+    h1 Dashboard
+    hr
+
+    form.form(method="GET" action="/book-search")
+      legend Find Book
+      include ./includes/csrf.jade
+      .form-group
+        label.form-label(for="isbn") #{__('ISBN')}
+        input#isbn.form-control(name="isbn" placeholder="978-1-56619-909-4" required="required")
+      .form-group
+        button.btn.btn-primary(type="submit") #{__('Search')}
+

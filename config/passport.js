@@ -56,22 +56,19 @@ var SOCIAL_STRATEGY_CONFIG = {
  * @private
  */
 var _onLocalStrategyAuth = function (req, email, password, next) {
-    sails.log.verbose("_onLocalStrategyAuth()");
-
-    User
-      .findOne({email: email})
-      .then(function (user) {
-        if (!user) {
-          return next(null, null, sails.config.errors.USER_NOT_FOUND);
-        }
-        if (!HashService.bcrypt.compareSync(password, user.password)) {
-          return next(null, null, sails.config.errors.USER_NOT_FOUND);
-        }
-        return next(null, user, null);
-      })
-      .catch(next);
-  }
-  ;
+  User
+    .findOne({email: email})
+    .then(function (user) {
+      if (!user) {
+        return next(null, null, sails.config.errors.USER_NOT_FOUND);
+      }
+      if (!HashService.bcrypt.compareSync(password, user.password)) {
+        return next(null, null, sails.config.errors.USER_NOT_FOUND);
+      }
+      return next(null, user, null);
+    })
+    .catch(next);
+};
 
 /**
  * Triggers when user authenticates via JWT strategy
@@ -81,20 +78,17 @@ var _onLocalStrategyAuth = function (req, email, password, next) {
  * @private
  */
 var _onJwtStrategyAuth = function (req, payload, next) {
-    sails.log.verbose("_onJwtStrategyAuth()");
+  User
+    .findOne({id: payload.id})
+    .then(function (user) {
+      if (!user) {
+        return next(null, null, sails.config.errors.USER_NOT_FOUND);
+      }
 
-    User
-      .findOne({id: payload.id})
-      .then(function (user) {
-        if (!user) {
-          return next(null, null, sails.config.errors.USER_NOT_FOUND);
-        }
-
-        return next(null, user, null);
-      })
-      .catch(next);
-  }
-  ;
+      return next(null, user, null);
+    })
+    .catch(next);
+};
 
 /**
  * Triggers when user authenticates via one of social strategies

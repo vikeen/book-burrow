@@ -1,21 +1,43 @@
 /**
- * sessionAuth
- *
- * @module      :: Policy
- * @description :: Simple policy to allow any authenticated user
- *                 Assumes that your login action in one of your controllers sets `req.session.authenticated = true;`
- * @docs        :: http://sailsjs.org/#!/documentation/concepts/Policies
- *
+ * checkAuthentication
+ * @description :: Policy that inject user in `req` via JSON Web Token
  */
-module.exports = function(req, res, next) {
 
-  // User is allowed, proceed to the next policy, 
-  // or if this is the last policy, the controller
-  if (req.session.authenticated) {
+var passport = require("passport");
+
+module.exports = function (req, res, next) {
+  req.user = false;
+  res.locals.user = false;
+  req.session.authenticated = false;
+
+  /*
+   * If the user has a cookie value then attach it as a authorization header
+   * The JWT parser will authenticate it from this point later
+   */
+  if (req.cookies["book-burrow.sid"]) {
+    req.headers["authorization"] = "JWT " + req.cookies["book-burrow.sid"];
+
+    passport.authenticate('jwt', function (error, user, info) {
+      error = error || info;
+
+      if (error) {
+        sails.log.error(error);
+        return next();
+      }
+
+      if (!user) {
+        sails.log.error("Unable to authenticate user from jwt token");
+        return next();
+      }
+
+      sails.log.verbose("Successful jwt authentication for [user.id: " + user.id + "]");
+      req.user = user;
+      res.locals.user = user;
+      req.session.authenticated = true;
+
+      return next();
+    })(req, res);
+  } else {
     return next();
   }
-
-  // User is not allowed
-  // (default res.forbidden() behavior can be overridden in `config/403.js`)
-  return res.forbidden('You are not permitted to perform this action.');
 };

@@ -12,7 +12,7 @@ module.exports = {
 function create(req, res, next) {
   var values = _.omit(req.allParams(), 'id');
 
-  sails.log.info('UserController.signup(). Creating user');
+  sails.log.info('[controller] user.create');
 
   return User.create(values)
     .then(function (user) {

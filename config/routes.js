@@ -23,10 +23,8 @@
 module.exports = {
   routes: {
     'GET /': 'HomeController.index',
-    'GET /page-not-found': '404Controller.index',
 
-    'POST /register': 'UserController.create',
-
+    // Authentication
     'GET /register': 'AuthController.register',
     'GET /login': 'AuthController.login',
     'GET /logout': 'AuthController.logout',
@@ -34,6 +32,20 @@ module.exports = {
     //'GET /auth/facebook': 'AuthController.facebook',
     //'GET /auth/facebook/callback': 'AuthController.facebookCallback',
 
+    // User
+    'POST /register': 'UserController.create',
+
+    // Dashboard
+    'GET /dashboard': 'DashboardController.index',
+
+    // Books
+    'GET /book/:isbn': 'BookController.findOne',
+    'GET /book-search': 'BookController.find',
+
+    // Errors
+    'GET /page-not-found': '404Controller.index',
+
+    // Server Status
     'GET /ping': 'PingController.index'
   }
 };
