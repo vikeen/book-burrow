@@ -1,0 +1,25 @@
+extends ./layout.jade
+
+block content
+  .container.login
+    .row
+      .col-xs-12.col-sm-offset-3.col-sm-6
+        h1.login__title #{__('Log In')}
+        .login__social
+          a.btn.btn-block.btn-social.btn-facebook(href="/auth/facebook")
+            i.fa.fa-facebook #{__('Facebook')}
+        .login__separator
+        hr
+        .text-center #{__('or')}
+        hr
+        .login__local
+          form.form(method="POST" action="/auth/local")
+          include ./includes/csrf.jade
+          .form-group
+            label.form-label(for="email") #{__('Email')}
+            input#email.form-control(type="email" name="email" placeholder="#{__('name@email.com')}")
+          .form-group
+            label.form-label(for="password") #{__('Password')}
+            input#password.form-control(type="password" name="password" placeholder="#{__('password')}")
+          .form-group
+            button.btn.btn-primary(type="submit") #{__('Log In')}

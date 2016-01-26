@@ -1,0 +1,21 @@
+header
+  nav.navbar.navbar-default
+    .container.container-fluid
+      // Brand and toggle get grouped for better mobile display
+      .navbar-header
+        button.navbar-toggle.collapsed(data-toggle="collapse", data-target="#main-navigation", aria-expanded="false")
+          span.sr-only #{__('Toggle Navigation')}
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href="/") Book Burrow
+      #main-navigation.navbar-collapse.collapse
+        ul.nav.navbar-nav.navbar-right
+          if user
+            li
+              a(href="/dashboard") #{user.email}
+            li
+              a(href="/logout") #{__('Login')}
+          else
+            li
+              a(href="/login") #{__('Login')}

@@ -1,0 +1,24 @@
+extends ./layout.jade
+
+block content
+  .container.container-fluid
+    .row
+      .col-xs-12.col-sm-offset-3.col-sm-6
+        form.form(method="POST" action="/register" autocomplete="on")
+          legend #{__('Register')}
+          include ./includes/csrf.jade
+          .form-group
+            label.form-label(for="email") #{__('Email')}
+            input#email.form-control(type="email" name="email" placeholder="#{__('name@email.com')}")
+          .form-group.col-xs-12.col-sm-6
+            .row
+              label.form-label(for="firstName") #{__('First Name')}
+              input#firstName.form-control(name="firstName")
+          .form-group.col-xs-12.col-sm-6
+            label.form-label(for="lastName") #{__('Last Name')}
+            input#lastName.form-control(name="lastName")
+          .form-group
+            label.form-label(for="password") #{__('Password')}
+            input#password.form-control(type="password" name="password" autocomplete="off")
+          .form-group
+            button.btn.btn-primary(type="submit") #{__('Submit')}
