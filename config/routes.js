@@ -23,8 +23,8 @@
 module.exports = {
   routes: {
     'GET /': 'HomeController.index',
+    'GET /page-not-found': '404Controller.index',
 
-    'GET /dashboard': 'UserController.dashboard',
     'POST /register': 'UserController.create',
 
     'GET /register': 'AuthController.register',
