@@ -44,5 +44,10 @@ function logout(req, res, next) {
 }
 
 function signToken(user) {
-  return {token: CipherService.jwt.encodeSync({id: user.id}), user: user}
+  return {
+    token: CipherService.jwt.encodeSync({
+      id: user.id
+    }),
+    user: user
+  }
 }
